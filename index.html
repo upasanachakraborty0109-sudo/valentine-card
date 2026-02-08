@@ -68,46 +68,67 @@ h1{margin-top:30px;font-weight:normal;}
 }
 
 /* ================= GRID ================= */
+/* ===== CARD LAYOUT (UPDATED) ===== */
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:28px;
+  grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+  gap:34px;
   width:90%;
-  max-width:420px;
-  padding-bottom:120px;
+  max-width:460px;
+  padding-bottom:140px;
 }
 
-/* ================= CARDS ================= */
-.card{perspective:1000px;cursor:pointer;}
+/* Card container */
+.card{
+  perspective:1200px;
+  cursor:pointer;
+}
+
+/* Card body */
 .card-inner{
   width:100%;
-  height:240px;
+  height:300px;          /* ⬅️ Increased height */
   position:relative;
   transform-style:preserve-3d;
-  transition:.9s;
+  transition:transform .9s;
 }
-.card.flipped .card-inner{transform:rotateY(180deg);}
 
+/* Flip state */
+.card.flipped .card-inner{
+  transform:rotateY(180deg);
+}
+
+/* Front & back faces */
 .face{
-  position:absolute;inset:0;
-  border-radius:26px;
-  padding:20px;
+  position:absolute;
+  inset:0;
+  border-radius:30px;    /* ⬅️ Softer edges */
+  padding:26px;          /* ⬅️ More breathing room */
   backface-visibility:hidden;
-  box-shadow:0 18px 40px rgba(0,0,0,.25);
+  box-shadow:0 20px 45px rgba(0,0,0,.28);
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
 }
 
-.front{font-size:20px;font-weight:bold;color:white;}
+/* Front face */
+.front{
+  font-size:22px;        /* ⬅️ Slightly larger title */
+  font-weight:bold;
+  color:white;
+}
+
+/* Back face (text side) */
 .back{
   transform:rotateY(180deg);
   background:#fff7f9;
-  font-size:15px;
-  line-height:1.6;
+  font-size:16px;        /* ⬅️ Larger readable text */
+  line-height:1.75;      /* ⬅️ More line spacing */
   color:#4a2e1f;
 }
+
 
 .readme{background:var(--card1);}
 .gift{background:#8f6f00;}
@@ -211,7 +232,7 @@ h1{margin-top:30px;font-weight:normal;}
 </div>
 
 <h1>For You ❤️</h1>
-<div class="subtitle">Some feelings don’t need permission</div>
+<div class="subtitle">May be not relationship but some hear to heart feelings...</div>
 
 <div class="grid">
 
