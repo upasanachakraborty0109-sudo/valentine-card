@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For You ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #6b1d1d;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p.subtitle {
+      margin-bottom: 30px;
+      opacity: 0.85;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .card-front {
+      background: #fff;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card-back {
+      background: #fff5f7;
+      transform: rotateY(180deg);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>For You ❤️</h1>
+  <p class="subtitle">Little pieces of my heart, just for you</p>
+
+  <div class="grid">
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">Day 1 💌</div>
+        <div class="card-face card-back">
+          The day I realized you were different.
+          Somehow, everything felt warmer.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">Day 2 🌸</div>
+        <div class="card-face card-back">
+          I love how you exist so effortlessly,
+          yet mean so much to me.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">Day 3 ✨</div>
+        <div class="card-face card-back">
+          If home had a feeling,
+          it would be talking to you.
+        </div>
+      </div>
+    </div>
+
+    <div class="card" onclick="flip(this)">
+      <div class="card-inner">
+        <div class="card-face card-front">Final ❤️</div>
+        <div class="card-face card-back">
+          Will you be my Valentine?
+          Always & only you.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function flip(card) {
+      card.classList.toggle("flipped");
+    }
+
+    // floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }, 500);
+  </script>
+
+</body>
+</html>
