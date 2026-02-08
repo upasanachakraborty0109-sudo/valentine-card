@@ -1,219 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>For You ❤️</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Georgia", serif;
-      background: linear-gradient(135deg, #ffe6ea, #f7c6d0);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #5a1a1a;
-    }
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Georgia", serif;
+    background: linear-gradient(180deg, #ffe6eb, #f7c1cf);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #5a1a1a;
+  }
 
-    h1 {
-      margin-top: 30px;
-      font-weight: normal;
-    }
+  h1 {
+    margin-top: 30px;
+    font-weight: normal;
+    color: #8b1e3f;
+  }
 
-    p.subtitle {
-      opacity: 0.85;
-      margin-bottom: 30px;
-    }
+  .subtitle {
+    margin-bottom: 40px;
+    opacity: 0.85;
+  }
 
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 180px);
+    gap: 25px;
+    justify-content: center;
+    padding-bottom: 80px;
+  }
+
+  /* CARDS */
+  .card {
+    background: #fff7f9;
+    height: 220px;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.18);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+  }
+
+  .highlight {
+    background: #8b1e3f;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  /* MODAL */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .letter {
+    background: #fffafc;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    overflow-y: auto;
+    line-height: 1.7;
+    font-size: 15px;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #8b1e3f;
+  }
+
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 16px;
+    animation: floatUp 7s linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-110vh); opacity: 0; }
+  }
+
+  @media (max-width: 800px) {
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-      width: 90%;
-      max-width: 900px;
-      padding-bottom: 80px;
+      grid-template-columns: repeat(2, 180px);
     }
-
-    .card {
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 240px;
-      transform-style: preserve-3d;
-      transition: transform 0.9s;
-    }
-
-    .card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 12px 25px rgba(0,0,0,0.18);
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .card-front {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .card-back {
-      transform: rotateY(180deg);
-      font-size: 14px;
-      line-height: 1.5;
-      background: #fff7f9;
-    }
-
-    .card-back.long {
-      font-size: 13px;
-    }
-
-    .heart {
-      position: fixed;
-      bottom: -20px;
-      font-size: 18px;
-      animation: floatUp 7s linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes floatUp {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-110vh); opacity: 0; }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
 
 <h1>For You ❤️</h1>
-<p class="subtitle">Some feelings don’t need permission</p>
+<div class="subtitle">Some feelings don’t need permission</div>
 
 <div class="grid">
 
-  <!-- DAY 1 -->
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Day 1 💌</div>
-      <div class="card-face card-back long">
-        I know I was never meant to be permanent in your life.  
-        Yet from the first day I met you, something quietly sparked.  
-        <br><br>
-        Your ambition, your warmth, your friendliness—  
-        they felt like a fresh breeze I didn’t know I needed.  
-        Being around you made my heart restless in the most human way.  
-        Doing things for you made me happy—  
-        just like your name, you became my happiness.  
-        <br><br>
-        I loved you without asking,  
-        prayed for you without wanting,  
-        and learned how to love from a distance.  
-        <br><br>
-        If only once, I wish you would choose  
-        to show a little effort, a little love—  
-        just for a day.  
-        I need you sometimes.  
-        And I love you more than I ever learned how to explain.  
-        <br><br>
-        You were my friend, my guide, my quiet prayer—  
-        and the love I will always carry gently.
-      </div>
-    </div>
+  <!-- READ ME -->
+  <div class="card highlight" onclick="openLetter()">
+    Read Me ❤️
   </div>
 
-  <!-- VALENTINE WEEK -->
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Rose 🌹</div>
-      <div class="card-face card-back">
-        You make me bloom, simply by being you.
-      </div>
-    </div>
+  <div class="card">🌹 You make me bloom, simply by being you.</div>
+
+  <div class="card">
+    I still remember the first time you said you liked me… and loved me.
   </div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Propose 💍</div>
-      <div class="card-face card-back">
-        I still remember the first time you said you liked me… and loved me.
-      </div>
-    </div>
+  <div class="card">
+    Sweet moments with you still melt in my memory.
   </div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Chocolate 🍫</div>
-      <div class="card-face card-back">
-        Sweet moments with you still melt in my memory.
-      </div>
-    </div>
+  <div class="card">
+    Your hugs were always my safest place.
   </div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Teddy 🧸</div>
-      <div class="card-face card-back">
-        Your hugs were always my safest place.
-      </div>
-    </div>
+  <div class="card">
+    I promise to wish you well, always.
   </div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Promise 🤞</div>
-      <div class="card-face card-back">
-        I promise to wish you well, always.
-      </div>
-    </div>
+  <div class="card">
+    My favorite hug will always be yours.
   </div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Hug 🤍</div>
-      <div class="card-face card-back">
-        My favorite hug will always be yours.
-      </div>
-    </div>
+  <div class="card">
+    Loving you was breathless and beautiful.
   </div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Kiss 💋</div>
-      <div class="card-face card-back">
-        Loving you was breathless and beautiful.
-      </div>
-    </div>
-  </div>
-
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="card-face card-front">Valentine ❤️</div>
-      <div class="card-face card-back">
-        Loving you, even from afar, was never a mistake.
-      </div>
-    </div>
+  <div class="card">
+    Loving you, even from afar, was never a mistake.
   </div>
 
 </div>
 
+<!-- LETTER MODAL -->
+<div class="overlay" id="overlay">
+  <div class="letter">
+    <div class="close" onclick="closeLetter()">✕</div>
+
+    I know I was never meant to be permanent in your life.  
+    Yet from the first day I met you, something quietly sparked.  
+    <br><br>
+    Your ambition, your warmth, your friendliness—  
+    they felt like a fresh breeze I didn’t know I needed.  
+    Being around you made my heart restless in the most human way.  
+    Doing things for you made me happy—  
+    just like your name, you became my happiness.  
+    <br><br>
+    I loved you without asking,  
+    prayed for you without wanting,  
+    and learned how to love from a distance.  
+    <br><br>
+    If only once, I wish you would choose  
+    to show a little effort, a little love—  
+    just for a day.  
+    I need you sometimes.  
+    And I love you more than I ever learned how to explain.  
+    <br><br>
+    You were my friend, my guide, my quiet prayer—  
+    and the love I will always carry gently.
+  </div>
+</div>
+
 <script>
-  function flip(card) {
-    card.classList.toggle("flipped");
+  function openLetter() {
+    document.getElementById("overlay").style.display = "flex";
+  }
+
+  function closeLetter() {
+    document.getElementById("overlay").style.display = "none";
   }
 
   setInterval(() => {
@@ -223,7 +208,7 @@
     heart.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 7000);
-  }, 600);
+  }, 700);
 </script>
 
 </body>
