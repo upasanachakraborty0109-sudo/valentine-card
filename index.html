@@ -302,13 +302,15 @@ h1{margin-top:30px;font-weight:normal;}
   <div class="card" onclick="flip(this)">
   <div class="card-inner">
     <div class="face front c7">13th Kiss 💋</div>
-    <div class="face back">I promise to wish you well, always.</div>
+    <div class="face back">Mann toh kta hai tumhe aise hug kru ki chodna e na padhe apne beech hawa bhi na paas ho.. but tumhare liye side hug all that make you feel okay. I dont know I love this way too much. My baby Muuahh.</div>
   </div>
 </div>
 <div class="card" onclick="flip(this)">
   <div class="card-inner">
     <div class="face front c8">❤️ Valentine</div>
-    <div class="face back">Loving you, even from afar, was never a mistake.</div>
+    <div class="face back">So finally. I will not say much I just want to say that I know u have guilt and after putting all this effort u will only care that no one sees it and why did i do. 
+      I did because I love u for what you are alot alot. But kya kare ab jo ha waisa e hai agar thoda bhi accha lage toh mera sab kuch safal hogya. 
+      You are my world. Dont worry will delete everything. Will u be my Valentine? haha just joking i know u will not :) </div>
   </div>
 </div>
 
@@ -340,6 +342,8 @@ h1{margin-top:30px;font-weight:normal;}
     <br><br>
     You were my friend, my guide, my quiet prayer —  
     and the love I will always carry gently.
+<br><br>
+    Read each card and open the gifts after that :*
   </div>
 </div>
 
@@ -349,10 +353,10 @@ h1{margin-top:30px;font-weight:normal;}
     <div class="close" onclick="closeGift()">✕</div>
     🎁 Pick your mood
     <div class="emoji-row">
-      <span onclick="showGift('cute')">😊</span>
-      <span onclick="showGift('sad')">🌧️</span>
-      <span onclick="showGift('naughty')">😈</span>
-      <span onclick="showGift('daily')">☀️</span>
+      <span onclick="showGift('cute')">Happy😊</span>
+      <span onclick="showGift('sad')">Sad🌧️</span>
+      <span onclick="showGift('naughty')">Naughty😈</span>
+      <span onclick="showGift('daily')">Regular☀️</span>
     </div>
     <div class="message-box" id="giftMessage"></div>
   </div>
@@ -404,10 +408,10 @@ function closeGift(){document.getElementById("giftOverlay").style.display="none"
 function showGift(type){
   const m=document.getElementById("giftMessage");
   const txt={
-    cute:"I smile without realizing it whenever I think of you.",
-    sad:"Even when things are heavy, what we shared still mattered.",
-    naughty:"You really do know how to get into my head 😉",
-    daily:"Just checking in. I hope today is kind to you."
+    cute:"I smile without realizing it whenever I think of you. <br> #Coupon1: Happy mood calls for a fun and friendly convo.",
+    sad:"Even when things are heavy, what we shared still mattered.<br>#Coupon2: Some biryani or chinese maybe on a Wed or fri ? ( typical non veg days see i know )",
+    naughty:"You really do know how to get into my head 😉 <br> #Coupon3: Defenitely not interested but in case u feel like maybe we can think about old times together" ,
+    daily:"Just checking in. I hope today is kind to you. <br> #Coupon4: Whatever you wish to buy!!"
   };
   m.innerHTML=txt[type];
 }
