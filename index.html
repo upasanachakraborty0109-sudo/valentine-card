@@ -6,26 +6,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
+  :root {
+    --bg1: #ffe3ea;
+    --bg2: #f4b6c2;
+    --accent: #7a1433;
+    --card1: #7a1433;
+    --card2: #8b1e3f;
+    --card3: #9c2a4a;
+    --card4: #ad3656;
+    --card5: #be4261;
+    --card6: #cf4e6d;
+    --card7: #e05a78;
+    --card8: #f16684;
+    --letter-bg: #fdf6e3;
+    --letter-text: #4a2e1f;
+  }
+
   body {
     margin: 0;
     min-height: 100vh;
     font-family: "Georgia", serif;
-    background: linear-gradient(180deg, #ffe3ea, #f4b6c2);
+    background: linear-gradient(180deg, var(--bg1), var(--bg2));
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #5a1a1a;
+    color: var(--accent);
   }
 
   h1 {
     margin-top: 30px;
     font-weight: normal;
-    color: #7a1433;
   }
 
   .subtitle {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
     opacity: 0.85;
+  }
+
+  /* THEME BUTTON */
+  .theme-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  .theme-options {
+    display: none;
+    margin-top: 8px;
+  }
+
+  .theme-btn:hover .theme-options {
+    display: flex;
+    gap: 8px;
+  }
+
+  .theme-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #ccc;
   }
 
   /* GRID */
@@ -81,24 +128,18 @@
     line-height: 1.6;
   }
 
-  /* READ ME CARD */
   .readme {
-    background: linear-gradient(145deg, #7a1433, #a61c4d);
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
+    background: var(--accent);
   }
 
-  /* COLORS */
-  .c1 { background:#7a1433; }
-  .c2 { background:#8b1e3f; }
-  .c3 { background:#9c2a4a; }
-  .c4 { background:#ad3656; }
-  .c5 { background:#be4261; }
-  .c6 { background:#cf4e6d; }
-  .c7 { background:#e05a78; }
-  .c8 { background:#f16684; }
-  .c9 { background:#f7a1b5; color:#7a1433; }
+  .c1 { background: var(--card1); }
+  .c2 { background: var(--card2); }
+  .c3 { background: var(--card3); }
+  .c4 { background: var(--card4); }
+  .c5 { background: var(--card5); }
+  .c6 { background: var(--card6); }
+  .c7 { background: var(--card7); }
+  .c8 { background: var(--card8); }
 
   /* MODAL */
   .overlay {
@@ -112,18 +153,18 @@
   }
 
   .letter {
-    background: #fdf6e3;
+    background: var(--letter-bg);
+    color: var(--letter-text);
     width: 90%;
     max-width: 650px;
     max-height: 80vh;
     padding: 40px 35px;
     border-radius: 12px;
-    box-shadow: inset 0 0 0 2px #e2cfa4,
+    box-shadow: inset 0 0 0 2px rgba(120,80,40,0.35),
                 0 25px 45px rgba(0,0,0,0.4);
     overflow-y: auto;
     line-height: 1.8;
     font-size: 15px;
-    color: #4a2e1f;
     position: relative;
   }
 
@@ -141,20 +182,6 @@
     right: 16px;
     cursor: pointer;
     font-size: 18px;
-    color: #7a1433;
-  }
-
-  .heart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 16px;
-    animation: floatUp 7s linear infinite;
-    opacity: 0.6;
-  }
-
-  @keyframes floatUp {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-110vh); opacity: 0; }
   }
 
   @media (max-width: 800px) {
@@ -166,6 +193,17 @@
 </head>
 
 <body>
+
+<!-- THEME SELECTOR -->
+<div class="theme-btn">
+  🎨 Mood
+  <div class="theme-options">
+    <div class="theme-dot" style="background:#3b6ea5" onclick="setTheme('blue')"></div>
+    <div class="theme-dot" style="background:#111" onclick="setTheme('black')"></div>
+    <div class="theme-dot" style="background:#7a1433" onclick="setTheme('maroon')"></div>
+    <div class="theme-dot" style="background:#f1c232" onclick="setTheme('yellow')"></div>
+  </div>
+</div>
 
 <h1>For You ❤️</h1>
 <div class="subtitle">Some feelings don’t need permission</div>
@@ -179,7 +217,6 @@
     </div>
   </div>
 
-  <!-- FLIP CARDS -->
   <div class="card" onclick="flip(this)">
     <div class="card-inner">
       <div class="face front c1">🌹 Rose</div>
@@ -238,56 +275,67 @@
 
 </div>
 
-<!-- VINTAGE LETTER -->
+<!-- LETTER -->
 <div class="overlay" id="overlay">
   <div class="letter">
     <div class="close" onclick="closeLetter()">✕</div>
-
     I know I was never meant to be permanent in your life.  
     Yet from the first day I met you, something quietly sparked.  
     <br><br>
     Your ambition, your warmth, your friendliness—  
     they felt like a fresh breeze I didn’t know I needed.  
-    Being around you made my heart restless in the most human way.  
-    Doing things for you made me happy—  
-    just like your name, you became my happiness.  
-    <br><br>
-    I loved you without asking,  
-    prayed for you without wanting,  
-    and learned how to love from a distance.  
     <br><br>
     If only once, I wish you would choose  
     to show a little effort, a little love—  
     just for a day.  
     I need you sometimes.  
-    And I love you more than I ever learned how to explain.  
-    <br><br>
-    You were my friend, my guide, my quiet prayer—  
-    and the love I will always carry gently.
+    And I love you more than I ever learned how to explain.
   </div>
 </div>
 
 <script>
-  function flip(card) {
-    card.classList.toggle("flipped");
-  }
+function flip(card) {
+  card.classList.toggle("flipped");
+}
 
-  function openLetter() {
-    document.getElementById("overlay").style.display = "flex";
-  }
+function openLetter() {
+  document.getElementById("overlay").style.display = "flex";
+}
 
-  function closeLetter() {
-    document.getElementById("overlay").style.display = "none";
-  }
+function closeLetter() {
+  document.getElementById("overlay").style.display = "none";
+}
 
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
-  }, 700);
+function setTheme(theme) {
+  const r = document.documentElement.style;
+  if (theme === "blue") {
+    r.setProperty("--bg1","#dbe9f4");
+    r.setProperty("--bg2","#9fc5e8");
+    r.setProperty("--accent","#1f4e79");
+    r.setProperty("--card1","#1f4e79");
+    r.setProperty("--card2","#2e75b6");
+    r.setProperty("--card3","#4a86c5");
+    r.setProperty("--letter-bg","#f0f6fc");
+  }
+  if (theme === "black") {
+    r.setProperty("--bg1","#1c1c1c");
+    r.setProperty("--bg2","#000");
+    r.setProperty("--accent","#e6b8af");
+    r.setProperty("--card1","#111");
+    r.setProperty("--card2","#222");
+    r.setProperty("--card3","#333");
+    r.setProperty("--letter-bg","#f4f1ec");
+  }
+  if (theme === "maroon") location.reload();
+  if (theme === "yellow") {
+    r.setProperty("--bg1","#fff4cc");
+    r.setProperty("--bg2","#ffe599");
+    r.setProperty("--accent","#7f6000");
+    r.setProperty("--card1","#f1c232");
+    r.setProperty("--card2","#ffd966");
+    r.setProperty("--letter-bg","#fff8dc");
+  }
+}
 </script>
 
 </body>
