@@ -6,357 +6,192 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
-  :root {
-    --bg1:#ffe3ea;
-    --bg2:#f4b6c2;
-    --accent:#7a1433;
-    --letter-bg:#fdf6e3;
-    --letter-text:#4a2e1f;
+:root{
+  --bg1:#ffe3ea; --bg2:#f4b6c2; --accent:#7a1433;
+  --letter-bg:#fdf6e3; --letter-text:#4a2e1f;
+  --card1:#7a1433; --card2:#8b1e3f; --card3:#9c2a4a; --card4:#ad3656;
+  --card5:#be4261; --card6:#cf4e6d; --card7:#e05a78; --card8:#f16684;
+}
 
-    --card1:#7a1433;
-    --card2:#8b1e3f;
-    --card3:#9c2a4a;
-    --card4:#ad3656;
-    --card5:#be4261;
-    --card6:#cf4e6d;
-    --card7:#e05a78;
-    --card8:#f16684;
-  }
+body{
+  margin:0; min-height:100vh; font-family:"Georgia",serif;
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  display:flex; flex-direction:column; align-items:center; color:var(--accent);
+}
 
-  body {
-    margin:0;
-    min-height:100vh;
-    font-family:"Georgia", serif;
-    background:linear-gradient(180deg,var(--bg1),var(--bg2));
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    color:var(--accent);
-  }
+h1{margin-top:30px;font-weight:normal;}
+.subtitle{margin-bottom:35px;opacity:.85;}
 
-  h1 {
-    margin-top:30px;
-    font-weight:normal;
-  }
+.grid{
+  display:grid; grid-template-columns:repeat(4,180px);
+  gap:26px; justify-content:center; padding-bottom:80px;
+}
 
-  .subtitle {
-    margin-bottom:40px;
-    opacity:.85;
-  }
+.card{perspective:1000px;cursor:pointer;}
+.card-inner{
+  width:180px;height:230px;position:relative;
+  transform-style:preserve-3d;transition:.9s;
+}
+.card.flipped .card-inner{transform:rotateY(180deg);}
 
-  /* THEME BUTTON */
-  .theme-btn {
-    position:fixed;
-    top:20px;
-    right:20px;
-    background:white;
-    border-radius:14px;
-    padding:12px 16px;
-    box-shadow:0 8px 20px rgba(0,0,0,.25);
-    font-size:13px;
-    cursor:pointer;
-    z-index:5;
-    text-align:center;
-    line-height:1.3;
-  }
+.face{
+  position:absolute; inset:0; border-radius:20px; padding:20px;
+  backface-visibility:hidden; box-shadow:0 15px 30px rgba(0,0,0,.18);
+  display:flex; justify-content:center; align-items:center; text-align:center;
+}
 
-  .theme-options {
-    display:none;
-    margin-top:10px;
-    justify-content:center;
-    gap:10px;
-  }
+.front{font-size:18px;font-weight:bold;color:white;}
+.back{
+  transform:rotateY(180deg); background:#fff7f9;
+  font-size:14px; line-height:1.6;
+}
 
-  .theme-btn:hover .theme-options {
-    display:flex;
-  }
+.readme{background:var(--accent);}
+.gift{background:#8f6f00;}
 
-  .theme-dot {
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    border:1px solid #ccc;
-    cursor:pointer;
-  }
+.c1{background:var(--card1);} .c2{background:var(--card2);}
+.c3{background:var(--card3);} .c4{background:var(--card4);}
+.c5{background:var(--card5);} .c6{background:var(--card6);}
+.c7{background:var(--card7);} .c8{background:var(--card8);}
 
-  /* GRID */
-  .grid {
-    display:grid;
-    grid-template-columns:repeat(4,180px);
-    gap:26px;
-    justify-content:center;
-    padding-bottom:80px;
-  }
+/* MODALS */
+.overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.5);
+  display:none; justify-content:center; align-items:center; z-index:10;
+}
 
-  /* FLIP CARDS */
-  .card {
-    perspective:1000px;
-    cursor:pointer;
-  }
+.modal{
+  background:var(--letter-bg); color:var(--letter-text);
+  width:90%; max-width:520px; padding:30px; border-radius:16px;
+  box-shadow:0 25px 45px rgba(0,0,0,.4);
+  text-align:center; position:relative;
+}
 
-  .card-inner {
-    width:180px;
-    height:230px;
-    position:relative;
-    transform-style:preserve-3d;
-    transition:transform .9s;
-  }
+.close{
+  position:absolute; top:12px; right:16px; cursor:pointer;
+}
 
-  .card.flipped .card-inner {
-    transform:rotateY(180deg);
-  }
+.emoji-row{
+  display:flex; justify-content:space-around; margin:20px 0;
+  font-size:28px;
+}
 
-  .face {
-    position:absolute;
-    inset:0;
-    border-radius:20px;
-    padding:20px;
-    backface-visibility:hidden;
-    box-shadow:0 15px 30px rgba(0,0,0,.18);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-  }
+.emoji-row span{
+  cursor:pointer; transition:transform .2s;
+}
+.emoji-row span:hover{transform:scale(1.2);}
 
-  .front {
-    font-size:18px;
-    font-weight:bold;
-    color:white;
-  }
+.message-box{
+  margin-top:20px; font-size:15px; line-height:1.6;
+  min-height:60px;
+}
 
-  .back {
-    transform:rotateY(180deg);
-    background:#fff7f9;
-    font-size:14px;
-    line-height:1.6;
-  }
+/* HEARTS */
+.heart{
+  position:fixed; bottom:-20px; font-size:16px;
+  animation:floatUp 7s linear infinite; opacity:.6;
+}
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-110vh);opacity:0;}
+}
 
-  .readme {
-    background:var(--accent);
-  }
-
-  .c1{background:var(--card1);}
-  .c2{background:var(--card2);}
-  .c3{background:var(--card3);}
-  .c4{background:var(--card4);}
-  .c5{background:var(--card5);}
-  .c6{background:var(--card6);}
-  .c7{background:var(--card7);}
-  .c8{background:var(--card8);}
-
-  /* MODAL */
-  .overlay {
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.5);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:10;
-  }
-
-  .letter {
-    background:var(--letter-bg);
-    color:var(--letter-text);
-    width:90%;
-    max-width:650px;
-    max-height:80vh;
-    padding:40px 35px;
-    border-radius:12px;
-    box-shadow:
-      inset 0 0 0 2px rgba(120,80,40,.35),
-      0 25px 45px rgba(0,0,0,.4);
-    overflow-y:auto;
-    line-height:1.8;
-    font-size:15px;
-    position:relative;
-  }
-
-  .letter::before {
-    content:"";
-    position:absolute;
-    inset:15px;
-    border:1px solid rgba(120,80,40,.25);
-    pointer-events:none;
-  }
-
-  .close {
-    position:absolute;
-    top:12px;
-    right:16px;
-    cursor:pointer;
-    font-size:18px;
-  }
-
-  /* HEARTS */
-  .heart {
-    position:fixed;
-    bottom:-20px;
-    font-size:16px;
-    animation:floatUp 7s linear infinite;
-    opacity:.6;
-  }
-
-  @keyframes floatUp {
-    from {transform:translateY(0);opacity:1;}
-    to {transform:translateY(-110vh);opacity:0;}
-  }
-
-  @media (max-width:800px) {
-    .grid {grid-template-columns:repeat(2,180px);}
-  }
+@media(max-width:800px){
+  .grid{grid-template-columns:repeat(2,180px);}
+}
 </style>
 </head>
 
 <body>
-
-<!-- THEME SELECTOR -->
-<div class="theme-btn">
-  💭 Not into pink?<br>Pick your favourite 😉
-  <div class="theme-options">
-    <div class="theme-dot" style="background:#3b6ea5" onclick="setTheme('blue')"></div>
-    <div class="theme-dot" style="background:#111" onclick="setTheme('black')"></div>
-    <div class="theme-dot" style="background:#7a1433" onclick="setTheme('maroon')"></div>
-    <div class="theme-dot" style="background:#f1c232" onclick="setTheme('yellow')"></div>
-  </div>
-</div>
 
 <h1>For You ❤️</h1>
 <div class="subtitle">Some feelings don’t need permission</div>
 
 <div class="grid">
 
-  <!-- READ ME -->
-  <div class="card" onclick="openLetter()">
-    <div class="card-inner">
-      <div class="face front readme">Read Me ❤️</div>
-    </div>
+<!-- READ ME -->
+<div class="card" onclick="openLetter()">
+  <div class="card-inner">
+    <div class="face front readme">Read Me ❤️</div>
   </div>
+</div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c1">🌹 Rose</div>
-      <div class="face back">You make me bloom, simply by being you.</div>
-    </div>
+<!-- GIFT BOX -->
+<div class="card" onclick="openGift()">
+  <div class="card-inner">
+    <div class="face front gift">🎁 Gift</div>
   </div>
+</div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c2">💍 Propose</div>
-      <div class="face back">I still remember the first time you said you liked me… and loved me.</div>
-    </div>
+<!-- OTHER CARDS -->
+<div class="card" onclick="flip(this)">
+  <div class="card-inner">
+    <div class="face front c1">🌹 Rose</div>
+    <div class="face back">You make me bloom, simply by being you.</div>
   </div>
+</div>
 
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c3">🍫 Chocolate</div>
-      <div class="face back">Sweet moments with you still melt in my memory.</div>
-    </div>
+<div class="card" onclick="flip(this)">
+  <div class="card-inner">
+    <div class="face front c2">💍 Propose</div>
+    <div class="face back">I still remember the first time you said you liked me… and loved me.</div>
   </div>
-
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c4">🧸 Teddy</div>
-      <div class="face back">Your hugs were always my safest place.</div>
-    </div>
-  </div>
-
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c5">🤞 Promise</div>
-      <div class="face back">I promise to wish you well, always.</div>
-    </div>
-  </div>
-
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c6">🤍 Hug</div>
-      <div class="face back">My favorite hug will always be yours.</div>
-    </div>
-  </div>
-
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c7">💋 Kiss</div>
-      <div class="face back">Loving you was breathless and beautiful.</div>
-    </div>
-  </div>
-
-  <div class="card" onclick="flip(this)">
-    <div class="card-inner">
-      <div class="face front c8">❤️ Valentine</div>
-      <div class="face back">Loving you, even from afar, was never a mistake.</div>
-    </div>
-  </div>
+</div>
 
 </div>
 
 <!-- LETTER MODAL -->
-<div class="overlay" id="overlay">
-  <div class="letter">
+<div class="overlay" id="letterOverlay">
+  <div class="modal">
     <div class="close" onclick="closeLetter()">✕</div>
+    I know I was never meant to be permanent in your life.<br><br>
+    If only once, I wish you would choose to show a little effort,
+    a little love—just for a day.<br><br>
+    I love you more than I ever learned how to explain.
+  </div>
+</div>
 
-    I know I was never meant to be permanent in your life.  
-    Yet from the first day I met you, something quietly sparked.  
-    <br><br>
-    Your ambition, your warmth, your friendliness—  
-    they felt like a fresh breeze I didn’t know I needed.  
-    <br><br>
-    If only once, I wish you would choose  
-    to show a little effort, a little love—  
-    just for a day.  
-    I need you sometimes.  
-    And I love you more than I ever learned how to explain.  
-    <br><br>
-    You were my friend, my guide, my quiet prayer—  
-    and the love I will always carry gently.
+<!-- GIFT MODAL -->
+<div class="overlay" id="giftOverlay">
+  <div class="modal">
+    <div class="close" onclick="closeGift()">✕</div>
+    🎁 Pick your mood
+    <div class="emoji-row">
+      <span onclick="showGift('cute')">😊</span>
+      <span onclick="showGift('sad')">🌧️</span>
+      <span onclick="showGift('naughty')">😈</span>
+      <span onclick="showGift('daily')">☀️</span>
+    </div>
+    <div class="message-box" id="giftMessage"></div>
   </div>
 </div>
 
 <script>
-const themes = {
-  maroon:{
-    bg1:"#ffe3ea",bg2:"#f4b6c2",accent:"#7a1433",
-    cards:["#7a1433","#8b1e3f","#9c2a4a","#ad3656","#be4261","#cf4e6d","#e05a78","#f16684"],
-    letterBg:"#fdf6e3",letterText:"#4a2e1f"
-  },
-  blue:{
-    bg1:"#e8f1fb",bg2:"#a9c7e8",accent:"#1f4e79",
-    cards:["#1f4e79","#2e75b6","#4a86c5","#6fa8dc","#9fc5e8","#cfe2f3","#b4c7e7","#8eaadb"],
-    letterBg:"#f0f6fc",letterText:"#1f2d3d"
-  },
-  black:{
-    bg1:"#2b2b2b",bg2:"#000",accent:"#e6b8af",
-    cards:["#111","#1c1c1c","#262626","#303030","#3a3a3a","#444","#4f4f4f","#5a5a5a"],
-    letterBg:"#f4f1ec",letterText:"#2a1c14"
-  },
-  yellow:{
-    bg1:"#fff4cc",bg2:"#ffe599",accent:"#7f6000",
-    cards:["#8f6f00","#b59100","#f1c232","#ffd966","#ffe599","#ffeb99","#fff2cc","#fce5cd"],
-    letterBg:"#fff8dc",letterText:"#5a4500"
-  }
-};
-
-function setTheme(name){
-  const t=themes[name];
-  const r=document.documentElement.style;
-  r.setProperty("--bg1",t.bg1);
-  r.setProperty("--bg2",t.bg2);
-  r.setProperty("--accent",t.accent);
-  r.setProperty("--letter-bg",t.letterBg);
-  r.setProperty("--letter-text",t.letterText);
-  t.cards.forEach((c,i)=>r.setProperty(`--card${i+1}`,c));
-}
-
 function flip(card){card.classList.toggle("flipped");}
-function openLetter(){document.getElementById("overlay").style.display="flex";}
-function closeLetter(){document.getElementById("overlay").style.display="none";}
+
+function openLetter(){document.getElementById("letterOverlay").style.display="flex";}
+function closeLetter(){document.getElementById("letterOverlay").style.display="none";}
+
+function openGift(){
+  document.getElementById("giftMessage").innerHTML="";
+  document.getElementById("giftOverlay").style.display="flex";
+}
+function closeGift(){document.getElementById("giftOverlay").style.display="none";}
+
+function showGift(type){
+  const m=document.getElementById("giftMessage");
+  const texts={
+    cute:"I smile without realizing it whenever I think of you. You make ordinary days feel lighter.",
+    sad:"Even when things are heavy, I respect what we were and what we couldn’t be. That still matters.",
+    naughty:"You know exactly how to distract me… and I kind of enjoy losing control around you 😉",
+    daily:"Just checking in. I hope today treats you gently, wherever you are."
+  };
+  m.innerHTML=texts[type];
+}
 
 setInterval(()=>{
   const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
+  h.className="heart"; h.innerHTML="❤️";
   h.style.left=Math.random()*100+"vw";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),7000);
