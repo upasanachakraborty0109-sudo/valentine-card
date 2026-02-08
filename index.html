@@ -7,11 +7,20 @@
 
 <style>
 :root{
-  --bg1:#ffe3ea; --bg2:#f4b6c2; --accent:#7a1433;
-  --letter-bg:#fdf6e3; --letter-text:#4a2e1f;
+  --bg1:#e8f1fb;
+  --bg2:#a9c7e8;
+  --accent:#1f4e79;
+  --letter-bg:#f0f6fc;
+  --letter-text:#1f2d3d;
 
-  --card1:#7a1433; --card2:#8b1e3f; --card3:#9c2a4a; --card4:#ad3656;
-  --card5:#be4261; --card6:#cf4e6d; --card7:#e05a78; --card8:#f16684;
+  --card1:#1f4e79;
+  --card2:#8f6f00;
+  --card3:#1f4e79;
+  --card4:#2e75b6;
+  --card5:#4a86c5;
+  --card6:#6fa8dc;
+  --card7:#9fc5e8;
+  --card8:#b4c7e7;
 }
 
 body{
@@ -26,15 +35,15 @@ body{
 }
 
 h1{margin-top:30px;font-weight:normal;}
-.subtitle{margin-bottom:35px;opacity:.85}
+.subtitle{margin-bottom:30px;opacity:.85}
 
-/* THEME SELECTOR */
+/* THEME BUTTON */
 .theme-btn{
   position:fixed;
   top:20px;
   right:20px;
   background:white;
-  border-radius:14px;
+  border-radius:16px;
   padding:12px 16px;
   box-shadow:0 8px 20px rgba(0,0,0,.25);
   font-size:13px;
@@ -54,54 +63,74 @@ h1{margin-top:30px;font-weight:normal;}
   border:1px solid #ccc;cursor:pointer;
 }
 
-/* GRID */
+/* GRID – FIXED */
 .grid{
   display:grid;
-  grid-template-columns:repeat(4,180px);
-  gap:26px;
-  justify-content:center;
-  padding-bottom:80px;
+  grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+  gap:28px;
+  width:90%;
+  max-width:420px;
+  padding-bottom:100px;
 }
 
-/* FLIP CARDS */
-.card{perspective:1000px;cursor:pointer;}
+/* CARDS */
+.card{
+  perspective:1000px;
+  cursor:pointer;
+}
+
 .card-inner{
-  width:180px;height:230px;
+  width:100%;
+  height:240px;
   position:relative;
   transform-style:preserve-3d;
   transition:.9s;
 }
-.card.flipped .card-inner{transform:rotateY(180deg);}
+
+.card.flipped .card-inner{
+  transform:rotateY(180deg);
+}
 
 .face{
-  position:absolute;inset:0;
-  border-radius:20px;
+  position:absolute;
+  inset:0;
+  border-radius:26px;
   padding:20px;
   backface-visibility:hidden;
-  box-shadow:0 15px 30px rgba(0,0,0,.18);
-  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
 }
 
-.front{font-size:18px;font-weight:bold;color:white;}
-.back{
-  transform:rotateY(180deg);
-  background:#fff7f9;
-  font-size:14px;
-  line-height:1.6;
+.front{
+  font-size:20px;
+  font-weight:bold;
+  color:white;
 }
 
-.readme{background:var(--accent);}
-.gift{background:#8f6f00;}
+.back{
+  transform:rotateY(180deg);
+  background:#ffffff;
+  font-size:15px;
+  line-height:1.6;
+  color:#1f2d3d;
+}
 
-.c1{background:var(--card1);} .c2{background:var(--card2);}
-.c3{background:var(--card3);} .c4{background:var(--card4);}
-.c5{background:var(--card5);} .c6{background:var(--card6);}
-.c7{background:var(--card7);} .c8{background:var(--card8);}
+.readme{background:var(--card1);}
+.gift{background:var(--card2);}
+.c1{background:var(--card3);}
+.c2{background:var(--card4);}
+.c3{background:var(--card5);}
+.c4{background:var(--card6);}
+.c5{background:var(--card7);}
+.c6{background:var(--card8);}
 
 /* MODALS */
 .overlay{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background:rgba(0,0,0,.5);
   display:none;
   justify-content:center;
@@ -112,13 +141,14 @@ h1{margin-top:30px;font-weight:normal;}
 .modal{
   background:var(--letter-bg);
   color:var(--letter-text);
-  width:90%;max-width:520px;
+  width:90%;
+  max-width:520px;
   padding:30px;
-  border-radius:16px;
+  border-radius:18px;
   box-shadow:0 25px 45px rgba(0,0,0,.4);
   text-align:center;
-  position:relative;
   line-height:1.7;
+  position:relative;
 }
 
 .close{
@@ -129,6 +159,7 @@ h1{margin-top:30px;font-weight:normal;}
   font-size:18px;
 }
 
+/* GIFT */
 .emoji-row{
   display:flex;
   justify-content:space-around;
@@ -139,12 +170,11 @@ h1{margin-top:30px;font-weight:normal;}
   cursor:pointer;
   transition:.2s;
 }
-.emoji-row span:hover{transform:scale(1.2);}
-
+.emoji-row span:hover{transform:scale(1.25);}
 .message-box{
   margin-top:20px;
   font-size:15px;
-  min-height:70px;
+  min-height:60px;
 }
 
 /* HEARTS */
@@ -159,10 +189,6 @@ h1{margin-top:30px;font-weight:normal;}
   from{transform:translateY(0);opacity:1;}
   to{transform:translateY(-110vh);opacity:0;}
 }
-
-@media(max-width:800px){
-  .grid{grid-template-columns:repeat(2,180px);}
-}
 </style>
 </head>
 
@@ -170,12 +196,12 @@ h1{margin-top:30px;font-weight:normal;}
 
 <!-- THEME BUTTON -->
 <div class="theme-btn">
-  💭 Not into pink?<br>Pick your favourite 😉
+  ☁️ Not into pink?<br>Pick your favourite 😉
   <div class="theme-options">
-    <div class="theme-dot" style="background:#3b6ea5" onclick="setTheme('blue')"></div>
-    <div class="theme-dot" style="background:#111" onclick="setTheme('black')"></div>
-    <div class="theme-dot" style="background:#7a1433" onclick="setTheme('maroon')"></div>
-    <div class="theme-dot" style="background:#f1c232" onclick="setTheme('yellow')"></div>
+    <div class="theme-dot" style="background:#3b6ea5"></div>
+    <div class="theme-dot" style="background:#111"></div>
+    <div class="theme-dot" style="background:#7a1433"></div>
+    <div class="theme-dot" style="background:#f1c232"></div>
   </div>
 </div>
 
@@ -198,7 +224,7 @@ h1{margin-top:30px;font-weight:normal;}
   </div>
 </div>
 
-<!-- FLIP CARDS -->
+<!-- VALENTINE WEEK -->
 <div class="card" onclick="flip(this)">
   <div class="card-inner">
     <div class="face front c1">🌹 Rose</div>
@@ -227,6 +253,20 @@ h1{margin-top:30px;font-weight:normal;}
   </div>
 </div>
 
+<div class="card" onclick="flip(this)">
+  <div class="card-inner">
+    <div class="face front c5">🤞 Promise</div>
+    <div class="face back">I promise to wish you well, always.</div>
+  </div>
+</div>
+
+<div class="card" onclick="flip(this)">
+  <div class="card-inner">
+    <div class="face front c6">❤️ Valentine</div>
+    <div class="face back">Loving you, even from afar, was never a mistake.</div>
+  </div>
+</div>
+
 </div>
 
 <!-- LETTER MODAL -->
@@ -236,8 +276,7 @@ h1{margin-top:30px;font-weight:normal;}
     I know I was never meant to be permanent in your life.<br><br>
     If only once, I wish you would choose to show a little effort,
     a little love—just for a day.<br><br>
-    I need you sometimes.  
-    And I love you more than I ever learned how to explain.
+    I love you more than I ever learned how to explain.
   </div>
 </div>
 
@@ -257,43 +296,14 @@ h1{margin-top:30px;font-weight:normal;}
 </div>
 
 <script>
-const themes={
-  maroon:{
-    bg1:"#ffe3ea",bg2:"#f4b6c2",accent:"#7a1433",
-    cards:["#7a1433","#8b1e3f","#9c2a4a","#ad3656","#be4261","#cf4e6d","#e05a78","#f16684"],
-    letterBg:"#fdf6e3",letterText:"#4a2e1f"
-  },
-  blue:{
-    bg1:"#e8f1fb",bg2:"#a9c7e8",accent:"#1f4e79",
-    cards:["#1f4e79","#2e75b6","#4a86c5","#6fa8dc","#9fc5e8","#cfe2f3","#b4c7e7","#8eaadb"],
-    letterBg:"#f0f6fc",letterText:"#1f2d3d"
-  },
-  black:{
-    bg1:"#2b2b2b",bg2:"#000",accent:"#e6b8af",
-    cards:["#111","#1c1c1c","#262626","#303030","#3a3a3a","#444","#4f4f4f","#5a5a5a"],
-    letterBg:"#f4f1ec",letterText:"#2a1c14"
-  },
-  yellow:{
-    bg1:"#fff4cc",bg2:"#ffe599",accent:"#7f6000",
-    cards:["#8f6f00","#b59100","#f1c232","#ffd966","#ffe599","#ffeb99","#fff2cc","#fce5cd"],
-    letterBg:"#fff8dc",letterText:"#5a4500"
-  }
-};
-
-function setTheme(name){
-  const t=themes[name],r=document.documentElement.style;
-  r.setProperty("--bg1",t.bg1);
-  r.setProperty("--bg2",t.bg2);
-  r.setProperty("--accent",t.accent);
-  r.setProperty("--letter-bg",t.letterBg);
-  r.setProperty("--letter-text",t.letterText);
-  t.cards.forEach((c,i)=>r.setProperty(`--card${i+1}`,c));
-}
-
 function flip(c){c.classList.toggle("flipped");}
+
 function openLetter(){document.getElementById("letterOverlay").style.display="flex";}
 function closeLetter(){document.getElementById("letterOverlay").style.display="none";}
-function openGift(){document.getElementById("giftMessage").innerHTML="";document.getElementById("giftOverlay").style.display="flex";}
+function openGift(){
+  document.getElementById("giftMessage").innerHTML="";
+  document.getElementById("giftOverlay").style.display="flex";
+}
 function closeGift(){document.getElementById("giftOverlay").style.display="none";}
 
 function showGift(type){
