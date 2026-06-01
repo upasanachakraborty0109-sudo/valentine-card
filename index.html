@@ -1,510 +1,292 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>For You ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>June 2026 — For You</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
-/* ================= THEME VARIABLES ================= */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  /* PINK / MAROON DEFAULT */
-  --bg1:#ffe3ea;
-  --bg2:#f4b6c2;
-  --accent:#7a1433;
-
-  --letter-bg:#fdf6e3;
-  --letter-text:#4a2e1f;
-
-  --card1:#7a1433;
-  --card2:#8b1e3f;
-  --card3:#9c2a4a;
-  --card4:#ad3656;
-  --card5:#be4261;
-  --card6:#cf4e6d;
-  --card7:#e05a78;
-  --card8:#f16684;
+  --bg:#03060f;
+  --blue1:#4f8ef7;--blue2:#7eb8f7;--blue3:#a8d4ff;
+  --gold:#f5c842;--white:#f0f4ff;--dim:#4a5580;
+  --card:#0c1235;--card2:#101840;
+  --border:rgba(79,142,247,0.15);--borderhov:rgba(126,184,247,0.4);
 }
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
 
-/* ================= BASE ================= */
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:"Georgia", serif;
-  background:linear-gradient(180deg,var(--bg1),var(--bg2));
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  color:var(--accent);
-}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.ab{position:absolute;border-radius:50%;filter:blur(90px);opacity:0.1;animation:am ease-in-out infinite}
+@keyframes am{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(80px,-60px) scale(1.15)}66%{transform:translate(-50px,40px) scale(0.9)}}
 
-h1{margin-top:30px;font-weight:normal;}
-.subtitle{margin-bottom:35px;opacity:.85}
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4}
 
-/* ================= THEME SELECTOR ================= */
-.theme-btn{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:white;
-  border-radius:16px;
-  padding:12px 16px;
-  box-shadow:0 8px 20px rgba(0,0,0,.25);
-  font-size:13px;
-  cursor:pointer;
-  z-index:5;
-  text-align:center;
-}
-.theme-options{
-  display:none;
-  margin-top:10px;
-  gap:10px;
-  justify-content:center;
-}
-.theme-btn:hover .theme-options{display:flex;}
-.theme-dot{
-  width:22px;height:22px;border-radius:50%;
-  border:1px solid #ccc;cursor:pointer;
-}
+.gl{position:fixed;pointer-events:none;z-index:1;animation:gfall linear infinite;opacity:0}
+@keyframes gfall{0%{transform:translateY(-10px) rotate(0deg) scale(0);opacity:0}8%{opacity:1}85%{opacity:0.7}100%{transform:translateY(105vh) rotate(540deg) scale(0.3);opacity:0}}
 
-/* ================= GRID ================= */
-/* ===== CARD LAYOUT (UPDATED) ===== */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
-  gap:34px;
-  width:90%;
-  max-width:460px;
-  padding-bottom:140px;
+.opening{position:relative;z-index:2;max-width:680px;margin:0 auto;padding:70px 28px 50px;text-align:center}
+.opening-tag{font-size:9px;letter-spacing:5px;color:var(--blue2);text-transform:uppercase;opacity:0;animation:fu 1s ease 0.2s forwards;margin-bottom:20px}
+.opening-note{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1rem,2.5vw,1.22rem);
+  font-style:italic;line-height:2;
+  color:rgba(240,244,255,0.88);
+  opacity:0;animation:fu 1.2s ease 0.5s forwards;
+  border-left:2px solid rgba(79,142,247,0.4);
+  padding:22px 26px;text-align:left;
+  background:rgba(79,142,247,0.05);border-radius:0 8px 8px 0;
 }
+.opening-note .hl{color:var(--blue3)}
+.opening-note .gd{color:var(--gold)}
+.opening-divider{width:60px;height:1px;background:linear-gradient(to right,transparent,var(--blue1),transparent);margin:28px auto 0;opacity:0;animation:fu 1s ease 1.2s forwards}
 
-/* Card container */
-.card{
-  perspective:1200px;
-  cursor:pointer;
-}
+.month-label{text-align:center;padding:30px 0 10px;position:relative;z-index:2;opacity:0;animation:fu 1s ease 1.4s forwards}
+.month-label h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.5rem);font-weight:400;letter-spacing:6px;background:linear-gradient(135deg,var(--blue1),var(--blue3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.month-label p{font-size:9px;letter-spacing:3px;color:var(--dim);margin-top:6px;text-transform:uppercase}
 
-/* Card body */
-.card-inner{
-  width:100%;
-  height:300px;          /* ⬅️ Increased height */
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform .9s;
-}
+.cwrap{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:10px 16px 80px}
+.wdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.wd{text-align:center;font-size:8px;letter-spacing:2px;color:var(--dim);padding:10px 0;text-transform:uppercase}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 
-/* Flip state */
-.card.flipped .card-inner{
-  transform:rotateY(180deg);
+.day{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;min-height:100px;padding:12px 10px 10px;
+  cursor:pointer;position:relative;overflow:hidden;
+  transition:all 0.22s ease;display:flex;flex-direction:column;gap:4px;
 }
+.day:hover{background:var(--card2);border-color:var(--borderhov);transform:translateY(-3px) scale(1.01);box-shadow:0 8px 32px rgba(79,142,247,0.18);z-index:3}
+.day.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none}
+.day.bday{background:linear-gradient(135deg,#0d1545,#1a0a2e);border-color:rgba(245,200,66,0.5);box-shadow:0 0 24px rgba(245,200,66,0.12)}
+.day.bday:hover{box-shadow:0 8px 40px rgba(245,200,66,0.25);border-color:rgba(245,200,66,0.8)}
+.day.shivaji{background:linear-gradient(135deg,#0d1a10,#1a2d0d);border-color:rgba(255,153,0,0.4)}
+.day.mahadev{background:linear-gradient(135deg,#1a0d2e,#0d0a20);border-color:rgba(155,142,196,0.4)}
 
-/* Front & back faces */
-.face{
-  position:absolute;
-  inset:0;
-  border-radius:30px;    /* ⬅️ Softer edges */
-  padding:26px;          /* ⬅️ More breathing room */
-  backface-visibility:hidden;
-  box-shadow:0 20px 45px rgba(0,0,0,.28);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
+.day::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(to right,transparent,rgba(126,184,247,0.06),transparent);transition:left 0.5s ease}
+.day:hover::after{left:150%}
 
-/* Front face */
-.front{
-  font-size:22px;        /* ⬅️ Slightly larger title */
-  font-weight:bold;
-  color:white;
-}
+.dnum{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;line-height:1;background:linear-gradient(135deg,var(--blue2),var(--blue3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.day.bday .dnum{background:linear-gradient(135deg,var(--gold),#ffed8a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:17px}
+.day.shivaji .dnum{background:linear-gradient(135deg,#ff9900,#ffcc44);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.day.mahadev .dnum{background:linear-gradient(135deg,#9b8ec4,#c4b8f0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* Back face (text side) */
-.back{
-  transform:rotateY(180deg);
-  background:#fff7f9;
-  font-size:16px;        /* ⬅️ Larger readable text */
-  line-height:1.75;      /* ⬅️ More line spacing */
-  color:#4a2e1f;
-}
-/* STEAMY BUTTON */
-.steam-btn{
-  position:fixed;
-  bottom:30px;
-  right:30px;
-  background:#7a1433;
-  color:white;
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  cursor:pointer;
-  box-shadow:0 12px 30px rgba(0,0,0,.4);
-  z-index:6;
-  transition:transform .2s;
-}
+.demoji{font-size:18px;line-height:1;margin-top:2px}
+.dlabel{font-size:7px;letter-spacing:1px;line-height:1.4;text-transform:uppercase;color:rgba(126,184,247,0.5);margin-top:auto}
+.day.bday .dlabel{color:rgba(245,200,66,0.7)}
+.day.shivaji .dlabel{color:rgba(255,153,0,0.6)}
+.day.mahadev .dlabel{color:rgba(155,142,196,0.6)}
 
-.steam-btn:hover{
-  transform:scale(1.1);
-}
+.overlay{position:fixed;inset:0;background:rgba(3,6,15,0.9);backdrop-filter:blur(14px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:linear-gradient(145deg,#0c1235,#0f1a45);border:1px solid rgba(79,142,247,0.3);border-radius:14px;padding:48px 40px;max-width:460px;width:100%;position:relative;text-align:center;transform:scale(0.88) translateY(24px);transition:transform 0.38s cubic-bezier(0.34,1.5,0.64,1);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(79,142,247,0.1)}
+.overlay.open .modal{transform:scale(1) translateY(0)}
+.modal.mbday{background:linear-gradient(145deg,#0d1545,#1a0d30);border-color:rgba(245,200,66,0.4);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 60px rgba(245,200,66,0.12)}
+.modal.mshivaji{background:linear-gradient(145deg,#0d1a10,#1a2d0d);border-color:rgba(255,153,0,0.35)}
+.modal.mmahadev{background:linear-gradient(145deg,#1a0d2e,#0d0a20);border-color:rgba(155,142,196,0.35);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px rgba(155,142,196,0.1)}
 
-/* STEAMY MODAL */
-.steam-modal{
-  background:#2b0f18;
-  color:#ffe6ea;
-  width:90%;
-  max-width:420px;
-  padding:32px;
-  border-radius:18px;
-  box-shadow:0 25px 50px rgba(0,0,0,.6);
-  text-align:center;
-  position:relative;
-  line-height:1.7;
-}
+.mclose{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;transition:color 0.2s;line-height:1;padding:4px;font-family:'Inter',sans-serif}
+.mclose:hover{color:var(--white)}
+.mdate{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--blue2);margin-bottom:8px}
+.modal.mbday .mdate{color:var(--gold)}
+.modal.mshivaji .mdate{color:#ff9900}
+.modal.mmahadev .mdate{color:#9b8ec4}
+.memoji{font-size:3.2rem;margin:14px 0 8px;display:block;animation:bounce 0.45s cubic-bezier(0.34,1.5,0.64,1)}
+.mdivider{width:40px;height:1px;margin:16px auto;background:linear-gradient(to right,transparent,var(--blue1),transparent)}
+.modal.mbday .mdivider{background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.modal.mshivaji .mdivider{background:linear-gradient(to right,transparent,#ff9900,transparent)}
+.modal.mmahadev .mdivider{background:linear-gradient(to right,transparent,#9b8ec4,transparent)}
+.mthought{font-family:'Playfair Display',serif;font-size:clamp(1.05rem,2.5vw,1.2rem);font-style:italic;line-height:1.85;color:rgba(240,244,255,0.92);letter-spacing:0.2px}
+.mthought em{font-style:normal;color:var(--blue3)}
+.modal.mbday .mthought em{color:var(--gold)}
+.modal.mshivaji .mthought em{color:#ffcc44}
+.modal.mmahadev .mthought em{color:#c4b8f0}
 
-.steam-text{
-  font-size:16px;
-  font-style:italic;
-}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{0%{transform:scale(0.3);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.star{position:fixed;border-radius:50%;background:white;pointer-events:none;z-index:0;animation:twinkle ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:0.05}50%{opacity:0.6}}
 
-
-.readme{background:var(--card1);}
-.gift{background:#7a1433;}
-
-.c1{background:var(--card2);}
-.c2{background:var(--card3);}
-.c3{background:var(--card4);}
-.c4{background:var(--card5);}
-.c5{background:var(--card6);}
-.c6{background:var(--card7);}
-.c7{background:var(--card8);}
-
-/* ================= MODALS ================= */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:10;
-}
-
-.modal{
-  background:var(--letter-bg);
-  color:var(--letter-text);
-  width:90%;
-  max-width:650px;
-  max-height:80vh;
-  padding:40px 35px;
-  border-radius:14px;
-  box-shadow:
-    inset 0 0 0 2px rgba(120,80,40,.35),
-    0 25px 45px rgba(0,0,0,.4);
-  overflow-y:auto;
-  line-height:1.8;
-  font-size:15px;
-  position:relative;
-}
-
-.modal::before{
-  content:"";
-  position:absolute;
-  inset:15px;
-  border:1px solid rgba(120,80,40,.25);
-  pointer-events:none;
-}
-
-.close{
-  position:absolute;
-  top:12px;
-  right:16px;
-  cursor:pointer;
-  font-size:18px;
-}
-
-/* ================= GIFT ================= */
-.emoji-row{
-  display:flex;
-  justify-content:space-around;
-  margin:20px 0;
-  font-size:28px;
-}
-.emoji-row span{
-  cursor:pointer;
-  transition:.2s;
-}
-.emoji-row span:hover{transform:scale(1.25);}
-.message-box{
-  margin-top:20px;
-  font-size:15px;
-  min-height:70px;
-}
-
-/* ================= HEARTS ================= */
-.heart{
-  position:fixed;
-  bottom:-20px;
-  font-size:16px;
-  animation:floatUp 7s linear infinite;
-  opacity:.6;
-}
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1;}
-  to{transform:translateY(-110vh);opacity:0;}
+@media(max-width:600px){
+  .day{min-height:70px;padding:8px 6px 6px;border-radius:5px}
+  .demoji{font-size:14px}.dlabel{display:none}
+  .modal{padding:32px 22px}
+  .opening-note{font-size:0.95rem}
 }
 </style>
 </head>
-
 <body>
 
-<!-- THEME BUTTON -->
-<div class="theme-btn">
-  💭 Not into pink?<br>Pick your favourite 😉
-  <div class="theme-options">
-    <div class="theme-dot" style="background:#7a1433" onclick="setTheme('pink')"></div>
-    <div class="theme-dot" style="background:#3b6ea5" onclick="setTheme('blue')"></div>
-    <div class="theme-dot" style="background:#111" onclick="setTheme('black')"></div>
-    <div class="theme-dot" style="background:#f1c232" onclick="setTheme('yellow')"></div>
+<div class="aurora">
+  <div class="ab" style="width:700px;height:700px;background:#1a4af7;top:-200px;left:-150px;animation-duration:18s"></div>
+  <div class="ab" style="width:500px;height:500px;background:#4f8ef7;top:30%;right:-100px;animation-duration:22s;animation-delay:-7s"></div>
+  <div class="ab" style="width:400px;height:400px;background:#7b2fff;bottom:-100px;left:20%;animation-duration:16s;animation-delay:-4s"></div>
+  <div class="ab" style="width:350px;height:350px;background:#2f9fff;top:60%;right:15%;animation-duration:20s;animation-delay:-11s"></div>
+</div>
+<canvas id="bgc"></canvas>
+
+<div class="opening">
+  <p class="opening-tag">a note before you begin</p>
+  <div class="opening-note">
+    You never stop and read long paragraphs — <span class="hl">I know that.</span> So I didn't write any.<br><br>
+    Just one thought. Every day. All of June. All for you.<br><br>
+    <span class="gd">Happy birthday, my happiness, my lifeline.</span> Even if this is the last chapter of our story — for me, you will always be at the top of my world. Thinking about you gives me the same happiness as the very first day I looked at you. 
+    🖤 I just have memories left so this is for that version of you who did not forget me :)
   </div>
+  <div class="opening-divider"></div>
 </div>
 
-<h1>For You ❤️</h1>
-<div class="subtitle">May be not relationship but some hear to heart feelings...</div>
+<div class="month-label">
+  <h2>JUNE 2026</h2>
+  <p>tap any day &nbsp;·&nbsp; one thought at a time</p>
+</div>
 
-<div class="grid">
-
-<!-- READ ME -->
-<div class="card" onclick="openLetter()">
-  <div class="card-inner">
-    <div class="face front readme">Read Me ❤️</div>
+<div class="cwrap">
+  <div class="wdays">
+    <div class="wd">Sun</div><div class="wd">Mon</div><div class="wd">Tue</div>
+    <div class="wd">Wed</div><div class="wd">Thu</div><div class="wd">Fri</div>
+    <div class="wd">Sat</div>
   </div>
+  <div class="cgrid" id="grid"></div>
 </div>
 
-<!-- GIFT -->
-<div class="card" onclick="openGift()">
-  <div class="card-inner">
-    <div class="face front gift">🎁 Gift</div>
-  </div>
-</div>
-
-<!-- VALENTINE CARDS -->
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c1">7th- 🌹 Rose</div>
-    <div class="face back">The roses you gave me are the most precious gift 
-      I have ever have in my life , my love. They are all dried
-      up maybe finished just like your feelings for me but I still have them with me in the
-      safest corner of my heart.</div>
-  </div>
-</div>
-
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c2"> 8th- 💍 Propose</div>
-    <div class="face back">I still remember the first time you said you liked me with lots of guilt and fear double thinking always.… and then in panic and anger 
-      you said once u loved me. Maybe that is nothing I know still something I replay thousand time in my head so that I dont forget my favourite memory.</div>
-  </div>
-</div>
-
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c3">9th- 🍫 Chocolate</div>
-    <div class="face back">Sweet moments with you still melt in my memory. Sharing choclate mouth to mouth with u for first time like the movie and you have sent me 
-      chocolate icecream also. Those where not just chocolates for me but so much more because u thought and cared about me.</div>
-  </div>
-</div>
-
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c4">10th- 🧸 Teddy</div>
-    <div class="face back">Your hugs were always my safest place. u are the cutest teddy to laugh and fight with :) You are not just the person I love but my great friend too.</div>
-  </div>
-</div>
-
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c5">11th 🤞 Promise</div>
-    <div class="face back">I promise to delete the entire webpage once u see it once. I promise to never disturb you . 
-      I know you will not be whole heartedly happy I did this- you dont want me to make anything for u. 
-      I promise to not say “ I love you” . I promise to be exactly like you want me to .</div>
-  </div>
-</div>
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c6">12th Hug 🤍</div>
-    <div class="face back">Mann toh krta hai tumhe aise hug kru ki chodna e na padhe apne beech hawa bhi na paas ho.. but tumhare liye side hug all that make you feel okay. 
-      My Hero.</div>
-  </div>
-</div>
-  <div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c7">13th Kiss 💋</div>
-    <div class="face back">The best kiss 
-      I ever had from the first times to the tongue to tongue ones to quick forehead kisses or passionately sucking for long, my heart races..when your lips touch my body I want you inside me
-      . Oh! how sexy you are wanna bite you !! Muaahhh !!</div>
-  </div>
-</div>
-<div class="card" onclick="flip(this)">
-  <div class="card-inner">
-    <div class="face front c8">❤️ Valentine</div>
-    <div class="face back">So finally. I will not say much I just want to say that I know u have guilt and after putting all this effort u will only care that no one sees it and why did i do. 
-      I did because I love u for what you are alot alot. But kya kare ab jo ha waisa e hai agar thoda bhi accha lage toh mera sab kuch safal hogya. 
-      You are my world. Dont worry will delete everything. Will u be my Valentine? haha just joking i know u will not :) </div>
-  </div>
-</div>
-
-</div>
-<!-- STEAMY NOTE BUTTON -->
-<div class="steam-btn" onclick="openSteam()">
-  🔥
-</div>
-
-<!-- READ ME MODAL -->
-<div class="overlay" id="letterOverlay">
-  <div class="modal">
-    <div class="close" onclick="closeLetter()">✕</div>
-
-    I know I was never meant to be permanent in your life.  
-    Yet from the very first day I met you, something quietly sparked.  
-    <br><br>
-    Your ambition, your warmth, your friendliness —  
-    they felt like a fresh breeze I didn’t know I needed.  
-    Being around you made my heart restless in the most human way.  
-    Doing things for you made me happy.  
-    Just like your name, you became my happiness.  
-    <br><br>
-    I loved you without asking,  
-    prayed for you without wanting,  
-    and learned how to love from a distance.  
-    <br><br>
-    If only once, I wish you would choose  
-    to show a little effort, a little love —  
-    just for a day. Haa tumne hamesha se sab bola tha and pata tha mujhe but ajkal aisa lagta woh praana toy ban gayi huun jisse mann bhar jaata hai, itna change ho gaye ho..
-    khud pe e doubt hota hai kya mera kuch bhi accha nehi,is it my looks or attitude?  bohot efforts lagati huun kisi trah thoda interested ho tum mujh mein bohot koushis kii hai par kuch bhi
-    kr luu meri koi zaroorat nhi hai tumhe....chodo jaane do... mood nhi bigadungi fir padhoge e nhi!! sorry :)
-    <br><br>
-    I need you sometimes.  
-    And I love you more than I ever learned how to explain.  You are so attractive, I cannot control myself when I see you , there is fire inside me to just come near you.
-    <br><br>
-    You were my friend, my guide, my quiet prayer —  
-    and the love I will always carry gently.
-<br><br>
-    Read each card and open the gifts after that :*
-  </div>
-</div>
-
-<!-- GIFT MODAL -->
-<div class="overlay" id="giftOverlay">
-  <div class="modal">
-    <div class="close" onclick="closeGift()">✕</div>
-    🎁 Pick your mood
-    <div class="emoji-row">
-      <span onclick="showGift('cute')">Happy😊</span>
-      <span onclick="showGift('sad')">Sad🌧️</span>
-      <span onclick="showGift('naughty')">Naughty😈</span>
-      <span onclick="showGift('daily')">Regular☀️</span>
-    </div>
-    <div class="message-box" id="giftMessage"></div>
-  </div>
-</div>
-<!-- STEAMY NOTE MODAL -->
-<div class="overlay" id="steamOverlay">
-  <div class="steam-modal">
-    <div class="close" onclick="closeSteam()">✕</div>
-
-    <p class="steam-text">
-      This is the part I don’t usually say out loud…<br><br>
-
-      The way you make me lose focus.<br>
-      The way my thoughts wander when you’re near.<br><br>
-
-      I behave… but only because I have to 😉<br><br>
-You are the curse to my existence the more i want to go away the more i become attracted. My heart races my body burns 🥵 when I think about yoir fingers running through my body.. the way you control my mind just looking at me not even touching me.. I want to hate you so much but cannot control my desires. I feel like giving away everything in my possession.. your kiss on my skin feels like drops of rain in long dried soil.. my soul gets satisfied i become dripping wet hoping for you to give me the ultimate pleasure known to anyone. You complete me baby.. 
-when you are inside me i feel like i am in heaven .. and when i think about you.. i get turned on instantly… i just want to forget everything.. be the bad boy for me and just fuck me hard..i will satisfy you so good trust me.. be your naughty little babe riding your dick so deep ahhhh..When i am in that zone i do not think about anything else but how my lips craves your yours and I can do anything to aapke baahon mein do paal k liye bhi… baby i lustfully want you so bad
-      Don’t worry. I’ll behave again now.
-    </p>
+<div class="overlay" id="ov">
+  <div class="modal" id="modal">
+    <button class="mclose" id="mc">&#10005;</button>
+    <p class="mdate" id="md"></p>
+    <span class="memoji" id="me"></span>
+    <div class="mdivider"></div>
+    <p class="mthought" id="mt"></p>
   </div>
 </div>
 
 <script>
-const themes={
-  pink:{
-    bg1:"#ffe3ea",bg2:"#f4b6c2",accent:"#7a1433",
-    cards:["#7a1433","#8b1e3f","#9c2a4a","#ad3656","#be4261","#cf4e6d","#e05a78","#f16684"],
-    letterBg:"#fdf6e3",letterText:"#4a2e1f"
-  },
-  blue:{
-    bg1:"#e8f1fb",bg2:"#a9c7e8",accent:"#1f4e79",
-    cards:["#1f4e79","#2e75b6","#4a86c5","#6fa8dc","#9fc5e8","#cfe2f3","#b4c7e7","#8eaadb"],
-    letterBg:"#f0f6fc",letterText:"#1f2d3d"
-  },
-  black:{
-    bg1:"#2b2b2b",bg2:"#000",accent:"#e6b8af",
-    cards:["#111","#1c1c1c","#262626","#303030","#3a3a3a","#444","#4f4f4f","#5a5a5a"],
-    letterBg:"#f4f1ec",letterText:"#2a1c14"
-  },
-  yellow:{
-    bg1:"#fff4cc",bg2:"#ffe599",accent:"#7f6000",
-    cards:["#8f6f00","#b59100","#f1c232","#ffd966","#ffe599","#ffeb99","#fff2cc","#fce5cd"],
-    letterBg:"#fff8dc",letterText:"#5a4500"
-  }
+function firstEmoji(str){ return Array.from(str)[0] || str; }
+
+// June 2026 starts on a Monday — offset = 1
+const startOffset = 1;
+
+const days = {
+  1:  {e:"🌙", l:"day one",         cls:"",        t:"June starts and so does a whole month of me thinking about you. Which, honestly, is nothing new."},
+  2:  {e:"🏏", l:"cricket soul",    cls:"",        t:"The way you watch cricket — fully in it, completely alive. That kind of passion is one of my favourite things about you."},
+  3:  {e:"🥭", l:"mango season",    cls:"",        t:"It's mango season and you are in your element. No menu confusion here — just certainty, joy, and mango. <em>Correct choice, always.</em>"},
+  4:  {e:"🤖", l:"builder",         cls:"",        t:"You build things that think. Agents that reason. Code that learns. Most people don't even understand what that means. <em>I think it's extraordinary.</em>"},
+  5:  {e:"🌿", l:"veg thursday",    cls:"",        t:"It's Thursday — your veg day. I love that you have rituals. That you're consistent in quiet ways. <em>There's something grounding about a person who keeps their own rules.</em>"},
+  6:  {e:"⚔️", l:"rajyabhishek",    cls:"shivaji", t:"June 6, 1674 — Chhatrapati Shivaji Maharaj was crowned at Raigad Fort and changed history forever. <em>You carry that same loyalty and strength in how you live.</em> Jai Shivaji. 🙏"},
+  7:  {e:"🎬", l:"crime thriller",  cls:"",        t:"South Indian crime thrillers, the ones that pull you in and don't let go. I love knowing what you love. <em>Even the dark, gripping, stay-up-late kind of things.</em>"},
+  8:  {e:"🔱", l:"har har mahadev", cls:"mahadev", t:"Mahadev — destroyer and creator, stillness inside the storm. <em>The way you carry that faith quietly, deeply — it says everything about who you are.</em> Har Har Mahadev. 🔱"},
+  9:  {e:"🥭", l:"mango everything",cls:"",        t:"Mango lassi. Mango pickle. Raw mango. Ripe mango. You'd eat it every form, every day, every season if you could. <em>I respect the commitment.</em>"},
+  10: {e:"💙", l:"quietly you",     cls:"",        t:"You don't announce yourself. You don't need to. You just show up — steady, real — and somehow that's the loudest thing in the room."},
+  11: {e:"🕶️", l:"specs mystery",   cls:"",        t:"I knew your specs were lost before you even told me. That's how well I know you. <em>You, unfazed, carrying on — the most you thing ever.</em> 😄"},
+  12: {e:"🍛", l:"biryani wednesday",cls:"",       t:"There was a Wednesday and there was biryani and there was us. <em>That memory lives in me like a warm thing I take out and hold sometimes.</em> Our biryani day. 🥘"},
+  13: {e:"🏏", l:"like dhoni",      cls:"",        t:"Like DHONI- Calm when everything is on the line. Never performs for the crowd. Just delivers. <em>You carry that same unshakeable energy — I don't think you even know it.</em>"},
+  14: {e:"🌸", l:"sunday slow",     cls:"",        t:"Sundays feel like you. Slow. Warm. No performance needed. Just existing, fully, as exactly who you are. <em>I love you most in that version.</em>"},
+  15: {e:"🔱", l:"mahadev — shakti",cls:"mahadev", t:"Mahadev holds Shakti — destruction and devotion, together. <em>Real strength always knows how to be gentle.</em> You have both. I've seen it. Har Har Mahadev. 🔱"},
+  16: {e:"🥭", l:"tender coconut",  cls:"",        t:"Naturals tender coconut ice cream. You have opinions on ice cream — correct ones. No chocolate. <em>Just the clean, real, cool kind of sweet.</em> Like you, honestly."},
+  17: {e:"💻", l:"eve of you",      cls:"",        t:"Tomorrow is your birthday. I have been thinking about what to say for weeks. Nothing feels big enough. So just this: <em>I am so glad you were born.</em>"},
+  18: {e:"🎂", l:"happy birthday",  cls:"bday",    t:"<em>Happy birthday, my happiness, my lifeline.</em> Your birthday is the biggest celebration in my world — not because you know it, but because even being forgotten by you doesn't change how much you mean to me. You are everything. 🖤", bday:true},
+  19: {e:"🌟", l:"day after",       cls:"",        t:"Yesterday was your birthday. Today you're still the same person who makes my world make sense. <em>Nothing changes. Everything stays.</em>"},
+  20: {e:"🍫", l:"raffles & love",  cls:"",        t:"You don't like chocolate — but Raffaello you liked. And the time you sent me chocolate ice cream, I became a fan forever. <em>You do things like that without knowing what they mean to me.</em>"},
+  21: {e:"🔱", l:"mahadev — peace", cls:"mahadev", t:"Mahadev sits in stillness while the world moves. <em>There is a peace in you too — underneath everything — that I have always been drawn to.</em> Har Har Mahadev. 🔱"},
+  22: {e:"💗", l:"underconfident?", cls:"",        t:"You think you're underconfident. I want you to know — from where I stand — you are the sweetest, most complete person I have ever known. <em>You just can't see it yet.</em>"},
+  23: {e:"🥭", l:"mango boy forever",cls:"",       t:"Still eating mangoes. Still right about it. <em>In a world full of confusing menus and decisions, the mango is your north star. I find that deeply comforting.</em>"},
+  24: {e:"🍣", l:"the sushi chapter",cls:"",       t:"You didn't like sushi. I made you try it anyway. <em>That moment — you trusting me enough to try something you doubted — is one of my favourite things we've done.</em> Even if sushi lost. 😄"},
+  25: {e:"🌿", l:"veg thursday",    cls:"",        t:"Thursday again. Veg day again. Quietly consistent, quietly you. <em>I love that you have rules you keep for yourself. It's one of the things that makes you, you.</em>"},
+  26: {e:"🌌", l:"dream with you",  cls:"",        t:"One day I want to see the world with you. Some incredible place. Just us. <em>That dream lives in me quietly — waiting.</em> I think about it more than you know."},
+  27: {e:"🥂", l:"drunk memories",  cls:"",        t:"The most fun, the most real, the most purely you — when you're drunk and all the walls come down. <em>Those are some of my favourite memories of you.</em> The unfiltered version. 😄🖤"},
+  28: {e:"💙", l:"he never compliments",cls:"",    t:"You never compliment me. Not once. <em>But you stayed. And somehow that stayed with me more than any compliment ever could.</em>"},
+  29: {e:"🔱", l:"mahadev — faith", cls:"mahadev", t:"Mahadev asks for nothing — no performance, no perfection. Just faith. <em>The kind of devotion you carry is the same — quiet, unconditional, real.</em> Har Har Mahadev. 🔱"},
+  30: {e:"🖤", l:"end of june",     cls:"",        t:"June ends. The feeling doesn't. There were days you said you wanted me — and that felt like a fairytale. <em>I still hold that. I always will. Thinking of you gives me the same joy as the very first day I looked at you. Always. i will give away everything to get back that version of you even for a min :)</em>"},
 };
 
-function setTheme(name){
-  const t=themes[name],r=document.documentElement.style;
-  r.setProperty("--bg1",t.bg1);
-  r.setProperty("--bg2",t.bg2);
-  r.setProperty("--accent",t.accent);
-  r.setProperty("--letter-bg",t.letterBg);
-  r.setProperty("--letter-text",t.letterText);
-  t.cards.forEach((c,i)=>r.setProperty(`--card${i+1}`,c));
+// Build grid with Monday offset for June 2026
+const grid = document.getElementById('grid');
+for(let i = 0; i < startOffset; i++){
+  const emp = document.createElement('div');
+  emp.className = 'day empty';
+  grid.appendChild(emp);
+}
+for(let d = 1; d <= 30; d++){
+  const info = days[d];
+  const el = document.createElement('div');
+  el.className = 'day ' + (info.bday ? 'bday' : info.cls || '');
+  el.innerHTML = `<span class="dnum">${d}</span><span class="demoji">${firstEmoji(info.e)}</span><span class="dlabel">${info.l}</span>`;
+  el.addEventListener('click', () => openModal(d));
+  grid.appendChild(el);
 }
 
-function flip(c){c.classList.toggle("flipped");}
-function openLetter(){document.getElementById("letterOverlay").style.display="flex";}
-function closeLetter(){document.getElementById("letterOverlay").style.display="none";}
-function openGift(){
-  document.getElementById("giftMessage").innerHTML="";
-  document.getElementById("giftOverlay").style.display="flex";
-}
-function closeGift(){document.getElementById("giftOverlay").style.display="none";}
+const ov=document.getElementById('ov'),modal=document.getElementById('modal');
+const md=document.getElementById('md'),me=document.getElementById('me'),mt=document.getElementById('mt');
 
-function showGift(type){
-  const m=document.getElementById("giftMessage");
-  const txt={
-    cute:"I smile without realizing it whenever I think of you. <br> #Coupon1: Happy mood calls for a fun and friendly convo.",
-    sad:"Even when things are heavy, what we shared still mattered.<br>#Coupon2: Some biryani or chinese maybe on a Wed or fri ? ( typical non veg days see i know )",
-    naughty:"You really do know how to get into my head 😉 <br> #Coupon3: Defenitely not interested but in case u feel like maybe we can think about old times together<br>Look into my dark inner thoughts in the fire button below. Open in your own risk ;)" ,
-    daily:"Just checking in. I hope today is kind to you. <br> #Coupon4: Whatever you wish to buy!!"
-  };
-  m.innerHTML=txt[type];
+function openModal(d){
+  const info=days[d];
+  md.textContent=`June ${d}, 2026`;
+  me.textContent=info.e;
+  mt.innerHTML=info.t;
+  let cls='modal';
+  if(info.bday) cls+=' mbday';
+  else if(info.cls==='shivaji') cls+=' mshivaji';
+  else if(info.cls==='mahadev') cls+=' mmahadev';
+  modal.className=cls;
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){ov.classList.remove('open');document.body.style.overflow=''}
+document.getElementById('mc').addEventListener('click',closeModal);
+ov.addEventListener('click',e=>{if(e.target===ov)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// Canvas particles
+const cv=document.getElementById('bgc'),ctx=cv.getContext('2d');
+function resizeCv(){cv.width=innerWidth;cv.height=innerHeight}
+resizeCv();window.addEventListener('resize',resizeCv);
+const particles=[];
+for(let i=0;i<60;i++){
+  particles.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*1.5+0.3,o:Math.random()*0.4+0.1,hue:Math.random()*40+210});
+}
+function drawP(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  particles.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=cv.width;if(p.x>cv.width)p.x=0;
+    if(p.y<0)p.y=cv.height;if(p.y>cv.height)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${p.hue},90%,75%,${p.o})`;ctx.fill();
+  });
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(126,184,247,${0.06*(1-dist/120)})`;ctx.lineWidth=0.5;ctx.stroke()}
+    }
+  }
+  requestAnimationFrame(drawP);
+}
+drawP();
+
+// Stars
+for(let i=0;i<100;i++){
+  const s=document.createElement('div');s.className='star';
+  const sz=Math.random()*1.8+0.4;
+  s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-duration:${Math.random()*5+2}s;animation-delay:${Math.random()*5}s;`;
+  document.body.appendChild(s);
 }
 
-/* HEARTS */
-setInterval(()=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),7000);
-},700);
+// Glitter
+const gshapes=['✦','✧','⋆','·','★','✨','🔱'];
+function spawnGl(){
+  const g=document.createElement('div');g.className='gl';
+  const shape=gshapes[Math.floor(Math.random()*gshapes.length)];
+  const size=Math.random()*12+6;
+  const cols=['#a8d4ff','#7eb8f7','#f5c842','#ffffff','#c084fc','#60a5fa','#9b8ec4'];
+  const col=cols[Math.floor(Math.random()*cols.length)];
+  g.textContent=shape;
+  g.style.cssText=`left:${Math.random()*100}vw;top:-20px;font-size:${size}px;color:${col};animation-duration:${Math.random()*6+5}s;animation-delay:${Math.random()*3}s;text-shadow:0 0 6px ${col};`;
+  document.body.appendChild(g);
+  setTimeout(()=>g.remove(),12000);
+}
+setInterval(spawnGl,300);
 </script>
-<script>
-function openSteam(){
-  document.getElementById("steamOverlay").style.display="flex";
-}
-function closeSteam(){
-  document.getElementById("steamOverlay").style.display="none";
-}
-</script>
-
 </body>
 </html>
