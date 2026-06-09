@@ -290,6 +290,143 @@ function spawnGl(){
   setTimeout(()=>g.remove(),12000);
 }
 setInterval(spawnGl,300);
+  // ── GIFT WEEK SECTION ──
+const gifts = [
+  {day:12,date:"June 12",emoji:"🌙",title:"Day 1",budget:"₹1,000",
+   idea:"I don't know exactly where you are right now or what you're doing. But I know that somewhere, without even trying, you are making someone's world feel warmer just by existing in it. That someone is me. It has always been me.",
+   note:"Spend today on something that makes you feel like yourself. You deserve that, always."},
+  {day:13,date:"June 13",emoji:"🖤",title:"Day 2",budget:"₹1,000",
+   idea:"There are days I replay the first time I looked at you. Not the details — just the feeling. Like something in me recognised something in you before I had words for it. I still don't, really. Some feelings are bigger than language.",
+   note:"Today is yours. Spend it on something that makes you smile for no reason at all."},
+  {day:14,date:"June 14",emoji:"✨",title:"Day 3",budget:"₹1,000",
+   idea:"You once said you weren't expressive. But you stayed. You showed up quietly, consistently, in all the ways that actually count. That is the most expressive thing a person can do. I heard every single word you didn't say.",
+   note:"Get yourself something today. Not practical. Just something that feels like a small joy."},
+  {day:15,date:"June 15",emoji:"💙",title:"Day 4",budget:"₹1,000",
+   idea:"I think about the version of us that gets to be in the same place. The version where I don't have to miss you from across the world. I think about it more than I say. It is my favourite kind of daydream — the one that feels possible.",
+   note:"Today's ₹1,000 is for something that makes you feel good. That's the only rule."},
+  {day:16,date:"June 16",emoji:"🌸",title:"Day 5",budget:"₹1,000",
+   idea:"You are the most handsome, humble, quietly brilliant person I have ever known. You don't see it. That might be the most maddening thing about you. I would spend a lifetime trying to make you see what I see when I think of you.",
+   note:"Treat yourself today. You are someone worth treating well — especially by yourself."},
+  {day:17,date:"June 17",emoji:"🔥",title:"Day 6 — Eve of Your Birthday",budget:"₹1,000",
+   idea:"Tomorrow you turn another year older and I will be thinking about you from the moment I wake up. I have been thinking about you for a long time now. Distance hasn't changed it. Time hasn't changed it. Nothing has.",
+   note:"Tonight, do one thing just for yourself. Tomorrow belongs to you — and a little bit to me."},
+  {day:18,date:"June 18 — Your Birthday 🎂",emoji:"🖤",title:"Day 7 — Happy Birthday, My Happiness",budget:"₹1,000",
+   idea:"Even if this is the last chapter — even if the story ends here — you will always be at the top of my world. You will always be the person who made me feel the most. I loved you the first time I looked at you. I love you now. That never needed anything back.",
+   note:"Happy birthday, my happiness, my lifeline. Spend today on something beautiful. You are worth every bit of it. 🖤",isBday:true}
+];
+ 
+// inject style
+const gStyle=document.createElement('style');
+gStyle.textContent=`
+  .gift-section{position:relative;z-index:2;max-width:900px;margin:0 auto 80px;padding:0 16px}
+  .gift-section-header{text-align:center;padding:60px 0 40px}
+  .gift-tag{font-size:9px;letter-spacing:5px;color:#c9929a;text-transform:uppercase;margin-bottom:14px}
+  .gift-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:400;font-style:italic;background:linear-gradient(135deg,#c9929a,#f5c842);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+  .gift-subtitle{font-size:10px;letter-spacing:2px;color:#4a5580;text-transform:uppercase}
+  .gift-divider{width:60px;height:1px;background:linear-gradient(to right,transparent,#c9929a,transparent);margin:20px auto}
+  .gift-intro{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(0.9rem,2vw,1.05rem);color:rgba(240,244,255,0.5);max-width:500px;margin:0 auto;line-height:1.9}
+  .gift-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:10px}
+  .gcard{background:linear-gradient(135deg,#130c1e,#0c0f20);border:1px solid rgba(201,146,154,0.18);border-radius:12px;padding:24px 20px;cursor:pointer;position:relative;overflow:hidden;transition:all 0.25s ease;min-height:140px;display:flex;flex-direction:column;gap:8px}
+  .gcard.is-bday{background:linear-gradient(135deg,#1a0a1e,#0d0a20);border-color:rgba(245,200,66,0.3)}
+  .gcard:hover:not(.unlocked){transform:translateY(-3px);box-shadow:0 8px 30px rgba(201,146,154,0.12)}
+  .gcard.is-bday:hover:not(.unlocked){box-shadow:0 8px 30px rgba(245,200,66,0.12)}
+  .glocked{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;text-align:center}
+  .glocked-emoji{font-size:2rem}
+  .glocked-date{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:rgba(240,244,255,0.45)}
+  .glocked-hint{font-size:8px;letter-spacing:2px;color:rgba(201,146,154,0.4);text-transform:uppercase}
+  .grevealed{display:none;flex-direction:column;gap:10px}
+  .grevealed.show{display:flex}
+  .gcard-top{display:flex;align-items:center;gap:10px}
+  .gcard-emoji{font-size:1.8rem}
+  .gcard-meta{font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;color:#c9929a}
+  .gcard.is-bday .gcard-meta{color:#f5c842}
+  .gcard-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:#f0f4ff}
+  .gcard-hr{width:100%;height:1px;background:linear-gradient(to right,rgba(201,146,154,0.15),transparent)}
+  .gcard.is-bday .gcard-hr{background:linear-gradient(to right,rgba(245,200,66,0.2),transparent)}
+  .gcard-idea{font-family:'Playfair Display',serif;font-size:0.92rem;font-style:italic;line-height:1.75;color:rgba(240,244,255,0.85)}
+  .gcard-note{margin-top:4px;padding:12px 14px;background:rgba(201,146,154,0.07);border-radius:6px;border-left:2px solid rgba(201,146,154,0.3)}
+  .gcard.is-bday .gcard-note{border-left-color:rgba(245,200,66,0.4)}
+  .gcard-note p{font-family:'IM Fell English',serif;font-size:0.85rem;font-style:italic;color:rgba(201,146,154,0.85)}
+  .gcard.is-bday .gcard-note p{color:rgba(245,200,66,0.85)}
+  @keyframes heartFloat{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-80px) scale(0.3);opacity:0}}
+  @keyframes gFlip{0%{transform:rotateY(0)}50%{transform:rotateY(90deg)}100%{transform:rotateY(0)}}
+`;
+document.head.appendChild(gStyle);
+ 
+// build section
+const gs=document.createElement('section');
+gs.className='gift-section';
+gs.innerHTML=`
+  <div class="gift-section-header">
+    <p class="gift-tag">✦ for his eyes only ✦</p>
+    <h2 class="gift-title">Birthday Week Gifts</h2>
+    <p class="gift-subtitle">june 12 – 18 &nbsp;·&nbsp; ₹1,000 a day &nbsp;·&nbsp; one thing just for you</p>
+    <div class="gift-divider"></div>
+    <p class="gift-intro">Seven days. Seven small things. No grand gestures — just you, treating yourself, because someone across the world thinks you deserve it every single day.</p>
+  </div>
+  <div class="gift-grid" id="giftGrid"></div>
+`;
+document.querySelector('.cwrap').after(gs);
+ 
+const gg=document.getElementById('giftGrid');
+gifts.forEach(g=>{
+  const c=document.createElement('div');
+  c.className='gcard'+(g.isBday?' is-bday':'');
+  c.innerHTML=`
+    <div class="glocked">
+      <span class="glocked-emoji">🔒</span>
+      <p class="glocked-date">${g.date}</p>
+      <p class="glocked-hint">tap to reveal</p>
+    </div>
+    <div class="grevealed">
+      <div class="gcard-top">
+        <span class="gcard-emoji">${g.emoji}</span>
+        <div>
+          <p class="gcard-meta">${g.budget} &nbsp;·&nbsp; ${g.date}</p>
+          <p class="gcard-name">${g.title}</p>
+        </div>
+      </div>
+      <div class="gcard-hr"></div>
+      <p class="gcard-idea">${g.idea}</p>
+      <div class="gcard-note"><p>— ${g.note}</p></div>
+    </div>
+  `;
+ 
+  c.addEventListener('click',()=>{
+    if(c.classList.contains('unlocked'))return;
+    c.classList.add('unlocked');
+    c.style.cursor='default';
+    // flip
+    c.style.transition='transform 0.25s ease';
+    c.style.transform='scale(0.94) rotateY(8deg)';
+    setTimeout(()=>{
+      c.querySelector('.glocked').style.display='none';
+      const rev=c.querySelector('.grevealed');
+      rev.classList.add('show');
+      rev.style.opacity='0';
+      c.style.borderColor=g.isBday?'rgba(245,200,66,0.55)':'rgba(201,146,154,0.45)';
+      c.style.boxShadow=`0 0 32px ${g.isBday?'rgba(245,200,66,0.12)':'rgba(201,146,154,0.1)'}`;
+      c.style.transform='scale(1.02)';
+      setTimeout(()=>{
+        c.style.transform='scale(1)';
+        rev.style.transition='opacity 0.5s ease';
+        rev.style.opacity='1';
+        const symbols=['🖤','✦','✧','♡','✨'];
+        const rect=c.getBoundingClientRect();
+        for(let i=0;i<8;i++){
+          const h=document.createElement('div');
+          h.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+          h.style.cssText=`position:fixed;left:${rect.left+Math.random()*rect.width}px;top:${rect.top+Math.random()*rect.height*0.6}px;font-size:${Math.random()*14+8}px;pointer-events:none;z-index:9999;animation:heartFloat ${0.8+Math.random()*0.8}s ease forwards;`;
+          document.body.appendChild(h);
+          setTimeout(()=>h.remove(),1600);
+        }
+      },200);
+    },200);
+  });
+  gg.appendChild(c);
+});
+ 
+
 </script>
 </body>
 </html>
